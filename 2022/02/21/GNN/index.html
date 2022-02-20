@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="代码部分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GNN">
+<meta property="og:url" content="http://example.com/2022/02/21/GNN/index.html">
+<meta property="og:site_name" content="322路97号">
+<meta property="og:description" content="代码部分">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-20T16:22:08.000Z">
+<meta property="article:modified_time" content="2022-02-20T16:35:30.798Z">
+<meta property="article:author" content="97">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/02/21/GNN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>GNN | 322路97号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband">
+	
+	</div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">322路97号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/21/GNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar-1.gif">
+      <meta itemprop="name" content="97">
+      <meta itemprop="description" content="只有你也想见我的时候，我们的见面才有意义">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="322路97号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GNN
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-21 00:22:08 / 修改时间：00:35:30" itemprop="dateCreated datePublished" datetime="2022-02-21T00:22:08+08:00">2022-02-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%91%BD%E5%90%8D%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB/" itemprop="url" rel="index"><span itemprop="name">命名实体识别</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/02/21/GNN/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/21/GNN/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h2><span id="more"></span>
+<p>import time<br>import sys<br>import argparse<br>import random<br>import torch<br>import gc<br>import pickle<br>import os<br>import torch.autograd as autograd<br>import torch.optim as optim<br>import numpy as np<br>from utils.metric import get_ner_fmeasure<br>from model.LGN import Graph<br>from utils.data import Data</p>
+<p>def str2bool(v):<br>    if isinstance(v, bool):<br>        return v<br>    if v.lower() in (‘yes’, ‘true’, ‘t’, ‘y’, ‘1’):<br>        return True<br>    elif v.lower() in (‘no’, ‘false’, ‘f’, ‘n’, ‘0’):<br>        return False<br>    else:<br>        raise argparse.ArgumentTypeError(‘Boolean value expected.’)</p>
+<p>def lr_decay(optimizer, epoch, decay_rate, init_lr):<br>    lr = init_lr * ((1 - decay_rate) ** epoch)<br>    print(“ Learning rate is setted as:”, lr)<br>    for param_group in optimizer.param_groups:<br>        if param_group[‘name’] == ‘aggr’:<br>            param_group[‘lr’] = lr * 2.<br>        else:<br>            param_group[‘lr’] = lr<br>    return optimizer</p>
+<p>def data_initialization(data, word_file, train_file, dev_file, test_file):<br>    data.build_word_file(word_file)</p>
+<pre><code>if train_file:
+    data.build_alphabet(train_file)
+    data.build_word_alphabet(train_file)
+if dev_file:
+    data.build_alphabet(dev_file)
+    data.build_word_alphabet(dev_file)
+if test_file:
+    data.build_alphabet(test_file)
+    data.build_word_alphabet(test_file)
+return data
+</code></pre>
+<p>def predict_check(pred_variable, gold_variable, mask_variable):<br>    pred = pred_variable.cpu().data.numpy()<br>    gold = gold_variable.cpu().data.numpy()<br>    mask = mask_variable.cpu().data.numpy()<br>    overlaped = (pred == gold)<br>    right_token = np.sum(overlaped * mask)<br>    total_token = mask.sum()<br>    return right_token, total_token</p>
+<p>def recover_label(pred_variable, gold_variable, mask_variable, label_alphabet):<br>    batch_size = gold_variable.size(0)<br>    seq_len = gold_variable.size(1)<br>    mask = mask_variable.cpu().data.numpy()<br>    pred_tag = pred_variable.cpu().data.numpy()<br>    gold_tag = gold_variable.cpu().data.numpy()<br>    pred_label = []<br>    gold_label = []</p>
+<pre><code>for idx in range(batch_size):
+    pred = [label_alphabet.get_instance(pred_tag[idx][idy]) for idy in range(seq_len) if mask[idx][idy] != 0]
+    gold = [label_alphabet.get_instance(gold_tag[idx][idy]) for idy in range(seq_len) if mask[idx][idy] != 0]
+    assert (len(pred) == len(gold))
+    pred_label.append(pred)
+    gold_label.append(gold)
+
+return pred_label, gold_label
+</code></pre>
+<p>def print_args(args):<br>    print(“CONFIG SUMMARY:”)<br>    print(“     Batch size: %s” % (args.batch_size))<br>    print(“     If use GPU: %s” % (args.use_gpu))<br>    print(“     If use CRF: %s” % (args.use_crf))<br>    print(“     Epoch  number: %s” % (args.num_epoch))<br>    print(“     Learning rate: %s” % (args.lr))<br>    print(“     L2 normalization rate: %s” % (args.weight_decay))<br>    print(“     If use edge embedding: %s” % (args.use_edge))<br>    print(“     If  use  global  node: %s” % (args.use_global))<br>    print(“     Bidirectional digraph: %s” % (args.bidirectional))<br>    print(“     Update   step  number: %s” % (args.iters))<br>    print(“     Attention  dropout   rate: %s” % (args.tf_drop_rate))<br>    print(“     Embedding  dropout   rate: %s” % (args.emb_drop_rate))<br>    print(“     Hidden  state   dimension: %s” % (args.hidden_dim))<br>    print(“     Learning rate decay ratio: %s” % (args.lr_decay))<br>    print(“     Aggregation module dropout rate: %s” % (args.cell_drop_rate))<br>    print(“     Head    number   of   attention: %s” % (args.num_head))<br>    print(“     Head  dimension   of  attention: %s” % (args.head_dim))<br>    print(“CONFIG SUMMARY END.”)<br>    sys.stdout.flush()</p>
+<p>def evaluate(data, args, model, name):<br>    if name == “train”:<br>        instances = data.train_Ids<br>    elif name == “dev”:<br>        instances = data.dev_Ids<br>    elif name == ‘test’:<br>        instances = data.test_Ids<br>    elif name == ‘raw’:<br>        instances = data.raw_Ids<br>    else:<br>        print(“Error: wrong evaluate name,”, name)<br>        exit(0)</p>
+<pre><code>pred_results = []
+gold_results = []
+
+# set model in eval model
+model.eval()
+batch_size = args.batch_size
+start_time = time.time()
+train_num = len(instances)
+total_batch = train_num // batch_size + 1
+
+for batch_id in range(total_batch):
+    start = batch_id * batch_size
+    end = (batch_id + 1) * batch_size
+    if end &gt; train_num:
+        end = train_num
+    instance = instances[start:end]
+    if not instance:
+        continue
+
+    word_list, batch_char, batch_label, mask = batchify_with_label(instance, args.use_gpu)
+    _, tag_seq = model(word_list, batch_char, mask)
+
+    pred_label, gold_label = recover_label(tag_seq, batch_label, mask, data.label_alphabet)
+
+    pred_results += pred_label
+    gold_results += gold_label
+
+decode_time = time.time() - start_time
+speed = len(instances) / decode_time
+
+acc, p, r, f = get_ner_fmeasure(gold_results, pred_results)
+return speed, acc, p, r, f, pred_results
+</code></pre>
+<p>def batchify_with_label(input_batch_list, gpu):<br>    batch_size = len(input_batch_list)<br>    chars = [sent[0] for sent in input_batch_list]<br>    words = [sent[1] for sent in input_batch_list]<br>    labels = [sent[2] for sent in input_batch_list]</p>
+<pre><code>sent_lengths = torch.LongTensor(list(map(len, chars)))
+max_sent_len = sent_lengths.max()
+char_seq_tensor = autograd.Variable(torch.zeros((batch_size, max_sent_len))).long()
+label_seq_tensor = autograd.Variable(torch.zeros((batch_size, max_sent_len))).long()
+mask = autograd.Variable(torch.zeros((batch_size, max_sent_len))).byte()
+
+for idx, (seq, label, seq_len) in enumerate(zip(chars, labels, sent_lengths)):
+    char_seq_tensor[idx, :seq_len] = torch.LongTensor(seq)
+    label_seq_tensor[idx, :seq_len] = torch.LongTensor(label)
+    mask[idx, :seq_len] = torch.Tensor([1] * int(seq_len))
+
+if gpu:
+    char_seq_tensor = char_seq_tensor.cuda()
+    label_seq_tensor = label_seq_tensor.cuda()
+    mask = mask.cuda()
+
+return words, char_seq_tensor, label_seq_tensor, mask
+</code></pre>
+<p>def train(data, args, saved_model_path):<br>    print(“Training model…”)<br>    model = Graph(data, args)<br>    if args.use_gpu:<br>        model = model.cuda()<br>    print(‘# generated parameters:’, sum(param.numel() for param in model.parameters()))<br>    print(“Finished built model.”)</p>
+<pre><code>best_dev_epoch = 0
+best_dev_f = -1
+best_dev_p = -1
+best_dev_r = -1
+
+best_test_f = -1
+best_test_p = -1
+best_test_r = -1
+
+# Initialize the optimizer
+aggr_module_params = []
+other_module_params = []
+for m_name in model._modules:
+    m = model._modules[m_name]
+    if isinstance(m, torch.nn.ModuleList):
+        for p in m.parameters():
+            if p.requires_grad:
+                aggr_module_params.append(p)
+    else:
+        for p in m.parameters():
+            if p.requires_grad:
+                other_module_params.append(p)
+
+optimizer = optim.Adam([
+    &#123;&quot;params&quot;: (aggr_module_params), &quot;name&quot;: &quot;aggr&quot;&#125;,
+    &#123;&quot;params&quot;: (other_module_params), &quot;name&quot;: &quot;other&quot;&#125;
+],
+    lr=args.lr,
+    weight_decay=args.weight_decay
+)
+
+for idx in range(args.num_epoch):
+    epoch_start = time.time()
+    temp_start = epoch_start
+    print((&quot;Epoch: %s/%s&quot; % (idx, args.num_epoch)))
+    optimizer = lr_decay(optimizer, idx, args.lr_decay, args.lr)
+    sample_loss = 0
+    batch_loss = 0
+    total_loss = 0
+    right_token = 0
+    whole_token = 0
+    random.shuffle(data.train_Ids)
+    # set model in train model
+    model.train()
+    model.zero_grad()
+    batch_size = args.batch_size
+    train_num = len(data.train_Ids)
+    total_batch = train_num // batch_size + 1
+
+    for batch_id in range(total_batch):
+        # Get one batch-sized instance
+        start = batch_id * batch_size
+        end = (batch_id + 1) * batch_size
+        if end &gt; train_num:
+            end = train_num
+        instance = data.train_Ids[start:end]
+        if not instance:
+            continue
+
+        word_list, batch_char, batch_label, mask = batchify_with_label(instance, args.use_gpu)
+        loss, tag_seq = model(word_list, batch_char, mask, batch_label)
+        right, whole = predict_check(tag_seq, batch_label, mask)
+        right_token += right
+        whole_token += whole
+        sample_loss += loss.data
+        total_loss += loss.data
+        batch_loss += loss
+
+        if end % 500 == 0:
+            temp_time = time.time()
+            temp_cost = temp_time - temp_start
+            temp_start = temp_time
+            print((&quot;     Instance: %s; Time: %.2fs; loss: %.4f; acc: %s/%s=%.4f&quot; %
+                   (end, temp_cost, sample_loss, right_token, whole_token, (right_token + 0.) / whole_token)))
+            sys.stdout.flush()
+            sample_loss = 0
+        if end % args.batch_size == 0:
+            batch_loss.backward()
+            optimizer.step()
+            model.zero_grad()
+            batch_loss = 0
+
+    temp_time = time.time()
+    temp_cost = temp_time - temp_start
+    print((&quot;     Instance: %s; Time: %.2fs; loss: %.4f; acc: %s/%s=%.4f&quot; %
+           (end, temp_cost, sample_loss, right_token, whole_token, (right_token + 0.) / whole_token)))
+    epoch_finish = time.time()
+    epoch_cost = epoch_finish - epoch_start
+    print((&quot;Epoch: %s training finished. Time: %.2fs, speed: %.2fst/s,  total loss: %s&quot; %
+           (idx, epoch_cost, train_num / epoch_cost, total_loss)))
+
+    # dev
+    speed, acc, dev_p, dev_r, dev_f, _ = evaluate(data, args, model, &quot;dev&quot;)
+    dev_finish = time.time()
+    dev_cost = dev_finish - epoch_finish
+
+    print((&quot;Dev: time: %.2fs, speed: %.2fst/s; acc: %.4f, p: %.4f, r: %.4f, f: %.4f&quot; %
+           (dev_cost, speed, acc, dev_p, dev_r, dev_f)))
+
+    # test
+    speed, acc, test_p, test_r, test_f, _ = evaluate(data, args, model, &quot;test&quot;)
+    test_finish = time.time()
+    test_cost = test_finish - dev_finish
+
+    print((&quot;Test: time: %.2fs, speed: %.2fst/s; acc: %.4f, p: %.4f, r: %.4f, f: %.4f&quot; %
+           (test_cost, speed, acc, test_p, test_r, test_f)))
+
+    if dev_f &gt; best_dev_f:
+        print(&quot;Exceed previous best f score: %.4f&quot; % best_dev_f)
+        torch.save(model.state_dict(), saved_model_path + &quot;_best&quot;)
+        best_dev_p = dev_p
+        best_dev_r = dev_r
+        best_dev_f = dev_f
+        best_dev_epoch = idx + 1
+        best_test_p = test_p
+        best_test_r = test_r
+        best_test_f = test_f
+
+    model_idx_path = saved_model_path + &quot;_&quot; + str(idx)
+    torch.save(model.state_dict(), model_idx_path)
+    with open(saved_model_path + &quot;_result.txt&quot;, &quot;a&quot;) as file:
+        file.write(model_idx_path + &#39;\n&#39;)
+        file.write(&quot;Dev score: %.4f, r: %.4f, f: %.4f\n&quot; % (dev_p, dev_r, dev_f))
+        file.write(&quot;Test score: %.4f, r: %.4f, f: %.4f\n\n&quot; % (test_p, test_r, test_f))
+        file.close()
+
+    print(&quot;Best dev epoch: %d&quot; % best_dev_epoch)
+    print(&quot;Best dev score: p: %.4f, r: %.4f, f: %.4f&quot; % (best_dev_p, best_dev_r, best_dev_f))
+    print(&quot;Best test score: p: %.4f, r: %.4f, f: %.4f&quot; % (best_test_p, best_test_r, best_test_f))
+
+    gc.collect()
+
+with open(saved_model_path + &quot;_result.txt&quot;, &quot;a&quot;) as file:
+    file.write(&quot;Best epoch: %d&quot; % best_dev_epoch + &#39;\n&#39;)
+    file.write(&quot;Best Dev score: %.4f, r: %.4f, f: %.4f\n&quot; % (best_dev_p, best_dev_r, best_dev_f))
+    file.write(&quot;Test score: %.4f, r: %.4f, f: %.4f\n\n&quot; % (best_test_p, best_test_r, best_test_f))
+    file.close()
+
+with open(saved_model_path + &quot;_best_HP.config&quot;, &quot;wb&quot;) as file:
+    pickle.dump(args, file)
+</code></pre>
+<p>def load_model_decode(model_dir, data, args, name):<br>    model_dir = model_dir + “_best”<br>    print(“Load Model from file: “, model_dir)<br>    model = Graph(data, args)<br>    model.load_state_dict(torch.load(model_dir))</p>
+<pre><code># load model need consider if the model trained in GPU and load in CPU, or vice versa
+if args.use_gpu:
+    model = model.cuda()
+
+print((&quot;Decode %s data ...&quot; % name))
+start_time = time.time()
+speed, acc, p, r, f, pred_results = evaluate(data, args, model, name)
+end_time = time.time()
+time_cost = end_time - start_time
+print((&quot;%s: time:%.2fs, speed:%.2fst/s; acc: %.4f, p: %.4f, r: %.4f, f: %.4f&quot; %
+       (name, time_cost, speed, acc, p, r, f)))
+
+return pred_results
+</code></pre>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    parser = argparse.ArgumentParser()<br>    parser.add_argument(‘–status’, choices=[‘train’, ‘test’, ‘decode’], help=’Function status.’, default=’train’)<br>    parser.add_argument(‘–use_gpu’, type=str2bool, default=False)<br>    parser.add_argument(‘–train’, help=’Training set.’, default=’data/onto4ner.cn/train.char.bmes’)<br>    parser.add_argument(‘–dev’, help=’Developing set.’, default=’data/onto4ner.cn/dev.char.bmes’)<br>    parser.add_argument(‘–test’, help=’Testing set.’, default=’data/onto4ner.cn/test.char.bmes’)<br>    parser.add_argument(‘–raw’, help=’Raw file for decoding.’)<br>    parser.add_argument(‘–output’, help=’Output results for decoding.’)<br>    parser.add_argument(‘–saved_set’, help=’Path of saved data set.’, default=’data/onto4ner.cn/saved.dset’)<br>    parser.add_argument(‘–saved_model’, help=’Path of saved model.’, default=”saved_model/model_onto4ner”)<br>    parser.add_argument(‘–char_emb’, help=’Path of character embedding file.’,<br>                        default=”data/gigaword_chn.all.a2b.uni.ite50.vec”)<br>    parser.add_argument(‘–word_emb’, help=’Path of word embedding file.’, default=”data/ctb.50d.vec”)</p>
+<pre><code>parser.add_argument(&#39;--use_crf&#39;, type=str2bool, default=True)
+parser.add_argument(&#39;--use_edge&#39;, type=str2bool, default=True, help=&#39;If use lexicon embeddings (edge embeddings).&#39;)
+parser.add_argument(&#39;--use_global&#39;, type=str2bool, default=True, help=&#39;If use the global node.&#39;)
+parser.add_argument(&#39;--bidirectional&#39;, type=str2bool, default=True, help=&#39;If use bidirectional digraph.&#39;)
+
+parser.add_argument(&#39;--seed&#39;, help=&#39;Random seed&#39;, default=1023, type=int)
+parser.add_argument(&#39;--batch_size&#39;, help=&#39;Batch size.&#39;, default=1, type=int)
+parser.add_argument(&#39;--num_epoch&#39;, default=100, type=int, help=&quot;Epoch number.&quot;)
+parser.add_argument(&#39;--iters&#39;, default=4, type=int, help=&#39;The number of Graph iterations.&#39;)
+parser.add_argument(&#39;--hidden_dim&#39;, default=50, type=int, help=&#39;Hidden state size.&#39;)
+parser.add_argument(&#39;--num_head&#39;, default=10, type=int, help=&#39;Number of transformer head.&#39;)
+parser.add_argument(&#39;--head_dim&#39;, default=20, type=int, help=&#39;Head dimension of transformer.&#39;)
+parser.add_argument(&#39;--tf_drop_rate&#39;, default=0.1, type=float, help=&#39;Transformer dropout rate.&#39;)
+parser.add_argument(&#39;--emb_drop_rate&#39;, default=0.5, type=float, help=&#39;Embedding dropout rate.&#39;)
+parser.add_argument(&#39;--cell_drop_rate&#39;, default=0.2, type=float, help=&#39;Aggregation module dropout rate.&#39;)
+parser.add_argument(&#39;--word_alphabet_size&#39;, type=int, help=&#39;Word alphabet size.&#39;)
+parser.add_argument(&#39;--char_alphabet_size&#39;, type=int, help=&#39;Char alphabet size.&#39;)
+parser.add_argument(&#39;--label_alphabet_size&#39;, type=int, help=&#39;Label alphabet size.&#39;)
+parser.add_argument(&#39;--char_dim&#39;, type=int, help=&#39;Char embedding size.&#39;)
+parser.add_argument(&#39;--word_dim&#39;, type=int, help=&#39;Word embedding size.&#39;)
+parser.add_argument(&#39;--lr&#39;, type=float, default=2e-05)
+parser.add_argument(&#39;--lr_decay&#39;, type=float, default=0)
+parser.add_argument(&#39;--weight_decay&#39;, type=float, default=0)
+
+args = parser.parse_args()
+
+status = args.status.lower()
+seed_num = args.seed
+random.seed(seed_num)
+torch.manual_seed(seed_num)
+np.random.seed(seed_num)
+
+train_file = args.train
+dev_file = args.dev
+test_file = args.test
+raw_file = args.raw
+output_file = args.output
+saved_set_path = args.saved_set
+saved_model_path = args.saved_model
+char_file = args.char_emb
+word_file = args.word_emb
+
+if status == &#39;train&#39;:
+    if os.path.exists(saved_set_path):
+        print(&#39;Loading saved data set...&#39;)
+        with open(saved_set_path, &#39;rb&#39;) as f:
+            data = pickle.load(f)
+    else:
+        data = Data()
+        data_initialization(data, word_file, train_file, dev_file, test_file)
+        data.generate_instance_with_words(train_file, &#39;train&#39;)
+        data.generate_instance_with_words(dev_file, &#39;dev&#39;)
+        data.generate_instance_with_words(test_file, &#39;test&#39;)
+        data.build_char_pretrain_emb(char_file)
+        data.build_word_pretrain_emb(word_file)
+        if saved_set_path is not None:
+            print(&#39;Dumping data...&#39;)
+            with open(saved_set_path, &#39;wb&#39;) as f:
+                pickle.dump(data, f)
+    data.show_data_summary()
+    args.word_alphabet_size = data.word_alphabet.size()
+    args.char_alphabet_size = data.char_alphabet.size()
+    args.label_alphabet_size = data.label_alphabet.size()
+    args.char_dim = data.char_emb_dim
+    args.word_dim = data.word_emb_dim
+    print_args(args)
+    train(data, args, saved_model_path)
+
+elif status == &#39;test&#39;:
+    assert not (test_file is None)
+    if os.path.exists(saved_set_path):
+        print(&#39;Loading saved data set...&#39;)
+        with open(saved_set_path, &#39;rb&#39;) as f:
+            data = pickle.load(f)
+    else:
+        print(&quot;Cannot find saved data set: &quot;, saved_set_path)
+        exit(0)
+    data.generate_instance_with_words(test_file, &#39;test&#39;)
+    with open(saved_model_path + &quot;_best_HP.config&quot;, &quot;rb&quot;) as f:
+        args = pickle.load(f)
+    data.show_data_summary()
+    print_args(args)
+    load_model_decode(saved_model_path, data, args, &quot;test&quot;)
+
+elif status == &#39;decode&#39;:
+    assert not (raw_file is None or output_file is None)
+    if os.path.exists(saved_set_path):
+        print(&#39;Loading saved data set...&#39;)
+        with open(saved_set_path, &#39;rb&#39;) as f:
+            data = pickle.load(f)
+    else:
+        print(&quot;Cannot find saved data set: &quot;, saved_set_path)
+        exit(0)
+    data.generate_instance_with_words(raw_file, &#39;raw&#39;)
+    with open(saved_model_path + &quot;_best_HP.config&quot;, &quot;rb&quot;) as f:
+        args = pickle.load(f)
+    data.show_data_summary()
+    print_args(args)
+    decode_results = load_model_decode(saved_model_path, data, args, &quot;raw&quot;)
+    data.write_decoded_results(output_file, decode_results, &#39;raw&#39;)
+else:
+    print(&quot;Invalid argument! Please use valid arguments! (train/test/decode)&quot;)
+</code></pre>
+
+    </div>
+
+    
+    
+    
+	
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="97 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 学习</a>
+              <a href="/tags/NLP/" rel="tag"><i class="fa fa-tag"></i> NLP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/21/LR-CNN/" rel="prev" title="LR-CNN">
+      <i class="fa fa-chevron-left"></i> LR-CNN
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/21/TENER/" rel="next" title="TENER">
+      TENER <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">代码部分</span></a></li></ol></div>
+      </div>
+	  
+	
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="97"
+      src="/images/avatar-1.gif">
+  <p class="site-author-name" itemprop="name">97</p>
+  <div class="site-description" itemprop="description">只有你也想见我的时候，我们的见面才有意义</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zjq-97" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zjq-97" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+		
+	<!--音乐播放器-->
+	<div>
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=300 height=120 src="//music.163.com/outchain/player?type=2&id=1851258433&auto=1&height=66"></iframe>
+	</div>
+    </div>
+	
+  </aside>
+  <div id="sidebar-dimmer"></div>
+  
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">97</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'X4dlE7a3rNC7N8PWvEd8OO4h-gzGzoHsz',
+      appKey     : 'x2LyPkez2xivbSTayXUG70gy',
+      placeholder: "欢迎留言~",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>

@@ -1750,4 +1750,39 @@ else:
         <tag>NLP</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ElasticSearch</title>
+    <url>/2022/03/11/ElasticSearch/</url>
+    <content><![CDATA[<h1 id="ElasticSearch实现流程："><a href="#ElasticSearch实现流程：" class="headerlink" title="ElasticSearch实现流程："></a>ElasticSearch实现流程：</h1><span id="more"></span>
+<p>ElasticSearch简称es，像类似百度、谷歌这种大数据全文搜索引擎的场景都可以使用Elasticsearch作为底层支持框架。</p>
+<h2 id="ElasticSearch安装："><a href="#ElasticSearch安装：" class="headerlink" title="ElasticSearch安装："></a>ElasticSearch安装：</h2><p>JDK8，最低要求，使用Java开发，必须保证ElasticSearch的版本与Java的核心jar包版本对应。</p>
+<p>Windows环境下：<br>1、安装<br>下载地址：<a href="https://www.elastic.co/cn/downloads/">https://www.elastic.co/cn/downloads/</a><br>2、启动<br><img src="/2022/03/11/ElasticSearch/1.jpg" alt="图1"></p>
+<h2 id="安装可视化页面elasticsearch-head："><a href="#安装可视化页面elasticsearch-head：" class="headerlink" title="安装可视化页面elasticsearch-head："></a>安装可视化页面elasticsearch-head：</h2><p>使用前提：需要安装nodejs<br>1、下载地址<br><a href="https://github.com/mobz/elasticsearch-head">https://github.com/mobz/elasticsearch-head</a><br>2、安装<br>解压即可（尽量将ElasticSearch相关工具放在统一目录下）<br>3、启动<br><img src="/2022/03/11/ElasticSearch/2.jpg" alt="图2"><br>这个head，我们只是把它当做可视化数据展示工具，之后所有的查询都在kibana中进行。</p>
+<h2 id="安装kibana："><a href="#安装kibana：" class="headerlink" title="安装kibana："></a>安装kibana：</h2><p>1、下载的版本需要与ElasticSearch版本对应。<br><a href="https://www.elastic.co/cn/downloads/">https://www.elastic.co/cn/downloads/</a><br>2、安装<br>解压即可（尽量将ElasticSearch相关工具放在统一目录下）<br>3、启动<br><img src="/2022/03/11/ElasticSearch/3.jpg" alt="图3"></p>
+<h2 id="安装IK分词器-elasticsearch插件-："><a href="#安装IK分词器-elasticsearch插件-：" class="headerlink" title="安装IK分词器(elasticsearch插件)："></a>安装IK分词器(elasticsearch插件)：</h2><p>IK提供了两个分词算法: ik_smart和ik_max_word ,其中ik_smart为最少切分, ik_max_word为最细粒度划分!<br>1、下载<br>版本要与ElasticSearch版本对应。<br>下载地址：<a href="https://github.com/medcl/elasticsearch-analysis-ik/releases%E3%80%82">https://github.com/medcl/elasticsearch-analysis-ik/releases。</a><br>2、安装<br>ik文件夹是自己创建的<br>解压即可（但是我们需要解压到ElasticSearch的plugins目录ik文件夹下）。</p>
+<h2 id="工程创建（springboot）："><a href="#工程创建（springboot）：" class="headerlink" title="工程创建（springboot）："></a>工程创建（springboot）：</h2><p>1.导入依赖：注意依赖版本和安装的版本一致<br><img src="/2022/03/11/ElasticSearch/4.jpg" alt="图4"><br>2.导入elasticsearch<br><img src="/2022/03/11/ElasticSearch/5.jpg" alt="图5"><br>3.导入前端素材<br>4.编写 application.preperties配置文件<br><img src="/2022/03/11/ElasticSearch/6.jpg" alt="图6"><br>5.数据放入 es 索引中<br><img src="/2022/03/11/ElasticSearch/7.jpg" alt="图7"><br>6.根据keyword分页查询结果<br><img src="/2022/03/11/ElasticSearch/8.jpg" alt="图8"></p>
+<h2 id="更多详细内容"><a href="#更多详细内容" class="headerlink" title="更多详细内容"></a>更多详细内容</h2><p>感谢狂神的分享 <a href="https://www.kuangstudy.com/bbs/1354069127022583809">https://www.kuangstudy.com/bbs/1354069127022583809</a></p>
+]]></content>
+      <categories>
+        <category>学习随记</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+        <tag>学习随记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexoWrite</title>
+    <url>/2022/03/11/hexoWrite/</url>
+    <content><![CDATA[<h1 id="hexo写文章并上传到github"><a href="#hexo写文章并上传到github" class="headerlink" title="hexo写文章并上传到github"></a>hexo写文章并上传到github</h1><span id="more"></span>
+<p>1.Git Bash Here<br><img src="/2022/03/11/hexoWrite/1.jpg" alt="图1"><br>2.hexo new 文章的名字<br><img src="/2022/03/11/hexoWrite/2.jpg" alt="图2"><br>3.打开文章编辑内容<br>4.hexo s 运行在本地看看效果<br><img src="/2022/03/11/hexoWrite/3.jpg" alt="图3"><br>5.上传到github<br><img src="/2022/03/11/hexoWrite/4.jpg" alt="图4"></p>
+]]></content>
+      <categories>
+        <category>学习随记</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+        <tag>学习随记</tag>
+      </tags>
+  </entry>
 </search>
